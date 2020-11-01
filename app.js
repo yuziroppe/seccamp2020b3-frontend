@@ -1,5 +1,7 @@
 // Fill in with your values
 const POST_ENDPOINT = 'https://seccamp2020b3-28.azurewebsites.net/api/post'
+const FOLLOW_ENDPOINT = 'https://seccamp2020b3-28.azurewebsites.net/api/FollowUser'
+const FOLLOW_GET_ENDPOINT = 'https://seccamp2020b3-28.azurewebsites.net/api/getFollowUser'
 const TIMELINE_ENDPOINT = 'https://seccamp2020b3-28.azurewebsites.net/api/timeline'
 
 function updateUI() {
@@ -114,4 +116,64 @@ document.getElementById('btn-post').addEventListener('click', (e) => {
       console.log('error', e);
     });
   return false;
+});
+
+// Handle follow api call
+document.getElementById('btn-follow').addEventListener('click', (e) => {
+  e.preventDefault();
+
+  fetch(FOLLOW_ENDPOINT, {
+    method: 'POST',
+    credentials: 'include',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      follow_id: document.getElementById('follow').value,
+    }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Response:', data);
+      document.getElementById('followuser').textContent = '';
+    })
+    .catch((e) => {
+      console.log('error', e);
+    });
+  return false;
+});
+
+// Handle follow-get api call
+document.getElementById('btn-timeline').addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value;
+
+  fetch(FOLLOW_GET_ENDPOINT, {
+    method: 'POST',
+    credentials: 'include',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: email ? JSON.stringify({id: email}) : "",
+  })
+    .then(response => response.json())
+    .then((data) => {
+      console.log('Message:', data);
+      const base = document.getElementById('followusers')
+      base.innerHTML = '';
+
+      const template  = document.getElementById('followtmpl');
+      data.msgs.forEach((msg) => {
+        const msgrow = template.cloneNode(true);
+        msgrow.id = null;
+        msgrow.querySelector('.followid').textContent = msg.follow_id;
+        base.appendChild(msgrow);
+      });
+    })
+    .catch((e) => {
+      console.log('error', e);
+    });
 });

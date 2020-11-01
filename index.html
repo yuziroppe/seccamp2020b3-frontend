@@ -31,12 +31,30 @@
           <input type="text" size="80" name="text" id="text"></input>
           <button id="btn-post" class="btn">投稿</button>
         </div>
+        <!-- my code start-->
+        <div class='api-actions'>
+          <input type="text" size="80" name="text" id="follow"></input>
+          <button id="btn-follow" class="btn">フォロー</button>
+        </div>
+        <div class='api-actions'>
+          <input type="text" size="80" name="text" id="follow-get"></input>
+          <button id="btn-follow-get" class="btn">フォローを表示</button>
+        </div>
+        <!-- my code end-->
         <div id="message"></div>
         <table id="messages" border>
         </table>
         <table style="display:none">
             <tr id="msgtmpl"><td class="msgemail"></td><td class="msgdate"></td><td class="msgtext"></td></tr>
         </table>
+
+        <div id="followuser"></div>
+        <table id="followusers" border>
+        </table>
+        <table style="display:none">
+            <tr id="followtmpl"><td class="followid"></td></tr>
+        </table>
+
         </form>
     </div>
   </div>
